@@ -28,6 +28,12 @@ composer update
  OR
 composer update --ignore-platform-reqs
 
-# I have made the Api Request on apisearchresults and apitripsummary 
-# Both of this are controllers located under App\Http\Controllers and all routing is included on the web.php file
-  
+# I have made the Api Request on:
+apisearchresults.php and apitripsummary.php 
+# Both of this are controllers located under:
+ App\Http\Controllers 
+ and all routing is included on the web.php file
+# Routes on this project
+/
+/tripsummary
+/passenger/details
