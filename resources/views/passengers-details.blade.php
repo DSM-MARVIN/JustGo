@@ -56,13 +56,17 @@
             </div>
         </div>
         <div class="content-area">
-        	<div class="container-sm bg-white rounded-5 p-4">
+        <div class="success hidden text-center img-fluid">
+            <img src="/images/paper-plane-31528.png" alt="" srcset="" width="350px">
+                    <h6 class="form-success-text text-success"><i class="fa fa-check-circle text-primary"></i> Reservation completed successfully</h6>
+        </div>
+        	<div class="content container-sm bg-white rounded-5 p-4">
                 <img src="/images/banner-book.svg" class="img-fluid d-block m-auto mb-3" />
                 <h3 class="text-center">Passenger Details</h3>
                 <p class="text-center"><strong class="text-uppercase">Primary Booking Contact:</strong></p>
-                <div class="success">
+                <!-- <div class="success">
                     <p class="form-success-text text-success hidden"><i class="fa fa-check-circle text-primary"></i> Reservation completed successfully</p>
-                </div>
+                </div> -->
                 <form action="" class="mb-4" class="form" enctype=”multipart/form-data”>
                 	<small class="mb-1 d-block">* Mandatory</small>
                 	<div class="mb-3">
@@ -186,8 +190,8 @@ $("form").on("submit", function (e) {
       data: dataString,
     });
 
-    $('.form').addClass('hidden');
-    $(".form-success-text").removeClass("hidden");
+    $(".content").addClass("hidden");
+    $(".success").removeClass("hidden");
 
     e.preventDefault();
 });
