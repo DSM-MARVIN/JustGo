@@ -67,7 +67,8 @@
                 <!-- <div class="success">
                     <p class="form-success-text text-success hidden"><i class="fa fa-check-circle text-primary"></i> Reservation completed successfully</p>
                 </div> -->
-                <form action="" class="mb-4" class="form" enctype=”multipart/form-data”>
+                <p class="text-danger" id="alert"></p>
+                <form action="" name="myForm" class="mb-4 form" enctype="multipart/form-data">
                 	<small class="mb-1 d-block">* Mandatory</small>
                 	<div class="mb-3">
                     	<div class="input-group">
@@ -94,7 +95,7 @@
                                 <option value="">+49</option>
                                 <option value="">+91</option>
                             </select>
-                            <input type="input" class="form-control" placeholder="Mobile Number *" required  pattern="^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$">
+                            <input type="input" class="form-control" name="phone" placeholder="Mobile Number *" pattern="^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$">
                         </div>
                     </div>
                     <div class="mb-3">
@@ -102,7 +103,7 @@
                             <div class="input-group-text input-group-addon pe-0">
                             	<i data-feather="mail"></i>
                             </div>
-                            <input type="email" class="form-control border-start-0" placeholder="Email Address *" required>
+                            <input type="email" class="form-control border-start-0" placeholder="Email Address *" id="email" name="email">
                         </div>
                     </div>
                     <div class="mb-3">
@@ -131,15 +132,15 @@
                                 <option value="">Mrs</option>
                                 <option value="">Ms</option>
                             </select>
-                            <input type="text" required class="form-control" placeholder="First Name as per ID/Passport" pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$">
+                            <input type="text"  class="form-control" name="name" placeholder="First Name as per ID/Passport" pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$">
                         </div>
                     </div>
                     <div class="mb-3">
-                    	<input type="text" required class="form-control" placeholder="Surname Name as per ID/Passport" pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$">
+                    	<input type="text" class="form-control" name="surname" placeholder="Surname Name as per ID/Passport" pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$">
                     </div>
                     <div class="mb-3">
                     	<div class="input-group">
-                          	<input type="text" class="form-control border-end-0" required placeholder="Date of Birth DD/MM/YYYY" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$">
+                          	<input type="date" class="form-control border-end-0" name="date" placeholder="Date of Birth DD/MM/YYYY" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$">
                            	<div class="input-group-text input-group-addon">
                               	<i data-feather="calendar"></i>
                           	</div>
@@ -181,9 +182,35 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <script>
+
 $("form").on("submit", function (e) {
-    var dataString = $(this).serialize();
     
+    var phone = document.forms["myForm"]["phone"].value;
+    var email = document.forms["myForm"]["email"].value;
+    var name = document.forms["myForm"]["name"].value;
+    var surname = document.forms["myForm"]["surname"].value;
+    var date = document.forms["myForm"]["date"].value;
+    var alertErr = document.getElementById("alert")
+
+    
+    
+    if (phone == "") {
+        alertErr.innerHTML = "<i class='fas fa-exclamation-triangle'></i> Phone must be filled out";
+        return false;
+    } else if(email == ""){
+        alertErr.innerHTML = "<i class='fas fa-exclamation-triangle'></i> Email must be filled out";
+        return false;
+    } else if(name == ""){
+        alertErr.innerHTML = "<i class='fas fa-exclamation-triangle'></i> Name must be filled out";
+        return false;
+    } else if(surname == ""){
+        alertErr.innerHTML = "<i class='fas fa-exclamation-triangle'></i> Surname must be filled out";
+        return false;
+    } else if(date == ""){
+        alertErr.innerHTML = "<i class='fas fa-exclamation-triangle'></i> Date must be filled out";
+        return false;
+    } else{
+    var dataString = $(this).serialize();
     $.ajax({
       type: "POST",
       url: "/passenger/details",
@@ -194,7 +221,44 @@ $("form").on("submit", function (e) {
     $(".success").removeClass("hidden");
 
     e.preventDefault();
+  }
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// $("form").on("submit", function (e) {
+//     var dataString = $(this).serialize();
+    
+//     $.ajax({
+//       type: "POST",
+//       url: "/passenger/details",
+//       data: dataString,
+//     });
+
+//     $(".content").addClass("hidden");
+//     $(".success").removeClass("hidden");
+
+//     e.preventDefault();
+// });
         </script>
     </body>
 </html>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
 
 class apitripsummary extends Controller
@@ -42,8 +43,25 @@ class apitripsummary extends Controller
       'price' => $body->outbound_trip_summary->price,
     ];
 
+
+    // $assigned_time = "2012-05-21 22:02:00";
+    // $completed_time= "2012-05-22 05:02:00";   
+    
+    // $d1 = new DateTime($assigned_time);
+    // $d2 = new DateTime($completed_time);
+    // $interval = $d2->diff($d1);
+
+    $duration =  (int)$body->outbound_trip_summary->depature_time;
+
+// j gives days
+    $time = date ( 's', $duration);
+
+
+
+
     return view('trip-summary',[
       'response' => $data,
+      'time' => $time,
 
     ]);
 

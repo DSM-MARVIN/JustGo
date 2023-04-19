@@ -46,7 +46,11 @@
                 </div>
             </div>
         </div>
+
+
+
         <div class="content-area">
+            <!-- <p>{{$time}}</p> -->
         	<div class="container-sm bg-white rounded-5 p-4 rounded-bottom-0">
                 <img src="images/banner-book.svg" class="img-fluid d-block m-auto mb-3" />
                 <h3 class="text-center mb-5">Book your trip</h3>
@@ -63,7 +67,8 @@
                         	<div class="row">
                                 <div class="col-8 align-self-center">
                                 	<ul class="fa-ul ms-3 float-end mb-0">
-                                        <li><span class="fa-li"><i class="fa-regular fa-clock"></i></span><strong>DURATION</strong> {{$response['depature_time']}}</li>
+                                        <!-- <li><span class="fa-li"><i class="fa-regular fa-clock"></i></span><strong>DURATION</strong> {{$response['depature_time']}}</li> -->
+                                        <li><span class="fa-li"><i class="fa-regular fa-clock"></i></span><strong>DURATION</strong> {{$time}} hours</li>
                                     </ul>
                                 </div>
                             </div>
@@ -86,7 +91,7 @@
                     <p><strong class="fs-1">R<span class="price" id="price">{{$response['price']}}</span></strong></p>
                     <div class="mb-3">
                         <div class="form-check">
-                            <input class="form-check-input1" name="check1" type="checkbox" value="" id="funeral_cover">
+                            <input class="form-check-input1 save-cb-state" name="check1" type="checkbox" value="" id="funeral_cover" autocomplete="off" >
                             <label class="form-check-label w-100" for="funeral_cover">
                             	<small>Include insurance in my booking</small><strong class="float-end">R9.00  <i class="fas fa-question-circle text-orange" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="This travel insurance covers the passenger for R10,000 in case of accidental death, for a continuous period of 30 days from the 1st minute on the 1st day of travel. The premium is payable as a one-off and in advance before the traveller embarks on his/her travel."></i></strong>
                             </label>
@@ -94,7 +99,7 @@
                     </div>
                     <div class="mb-3">
                         <div class="form-check">
-                            <input class="form-check-input1" name="check2" type="checkbox" value="" id="sms_confirmation">
+                            <input class="form-check-input1 save-cb-state" name="check2" type="checkbox" value="" id="sms_confirmation" autocomplete="off">
                             <label class="form-check-label w-100" for="sms_confirmation">
                             	<small>Send me SMS confiration</small><strong class="float-end">R5.00 <i class="fas fa-question-circle opacity-0"></i></strong>
                             </label>
@@ -142,7 +147,10 @@
 
         <script>
             const check1 = document.querySelector('.price');
-            $(document).ready(function(){
+         
+
+    
+          
             $('input[name="check1"]').click(function(){
             if($(this).prop("checked") == true){
 
@@ -160,7 +168,7 @@
 
             }
         });
-    });
+    ;
 
     $(document).ready(function(){
             $('input[name="check2"]').click(function(){
@@ -170,6 +178,7 @@
                 var data = document.getElementById('price').innerHTML;         
                 var price = Number(data ) + 5;
                 check1.innerHTML = price.toFixed(2) ;
+
 
             }
             else if($(this).prop("checked") == false){
@@ -182,6 +191,83 @@
             }
         });
     });
+
+
+setTimeout(
+    
+    function() {
+        
+        if (document.getElementById('funeral_cover').checked) {
+            var data = document.getElementById('price').innerHTML;
+                var price = Number(data ) + 9;
+                check1.innerHTML = price.toFixed(2);
+                if(document.getElementById('sms_confirmation').checked){
+                    var data = document.getElementById('price').innerHTML;         
+                    var price = Number(data ) + 5;
+                    check1.innerHTML = price.toFixed(2) ;
+                }
+        } 
+        
+       else if(document.getElementById('sms_confirmation').checked){
+                    var data = document.getElementById('price').innerHTML;         
+                    var price = Number(data ) + 5;
+                    check1.innerHTML = price.toFixed(2) ;
+       }
+        else {
+           confirm.log(Error)
+        } 
+    }
+
+
+    
+    
+    
+    
+    
+    , 1);
+
+(function() {
+  // variable to store our current state
+  var cbstate;
+  
+  // bind to the onload event
+  window.addEventListener('load', function() {
+    // Get the current state from localstorage
+    // State is stored as a JSON string
+    cbstate = JSON.parse(localStorage['CBState'] || '{}');
+  
+    // Loop through state array and restore checked 
+    // state for matching elements
+    for(var i in cbstate) {
+      var el = document.querySelector('input[name="' + i + '"]');
+      if (el) el.checked = true;
+    }
+  
+    // Get all checkboxes that you want to monitor state for
+    var cb = document.getElementsByClassName('save-cb-state');
+  
+    // Loop through results and ...
+    for(var i = 0; i < cb.length; i++) {
+  
+      //bind click event handler
+      cb[i].addEventListener('click', function(evt) {
+        // If checkboxe is checked then save to state
+        if (this.checked) {
+          cbstate[this.name] = true;
+        }
+    
+    // Else remove from state
+        else if (cbstate[this.name]) {
+          delete cbstate[this.name];
+        }
+    
+    // Persist state
+        localStorage.CBState = JSON.stringify(cbstate);
+      });
+    }
+  });
+})();
+     
 
         </script>
     </body>
