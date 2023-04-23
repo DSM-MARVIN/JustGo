@@ -50,7 +50,7 @@
 
 
         <div class="content-area">
-            <!-- <p>{{$time}}</p> -->
+           
         	<div class="container-sm bg-white rounded-5 p-4 rounded-bottom-0">
                 <img src="images/banner-book.svg" class="img-fluid d-block m-auto mb-3" />
                 <h3 class="text-center mb-5">Book your trip</h3>
@@ -68,7 +68,7 @@
                                 <div class="col-8 align-self-center">
                                 	<ul class="fa-ul ms-3 float-end mb-0">
                                         <!-- <li><span class="fa-li"><i class="fa-regular fa-clock"></i></span><strong>DURATION</strong> {{$response['depature_time']}}</li> -->
-                                        <li><span class="fa-li"><i class="fa-regular fa-clock"></i></span><strong>DURATION</strong> {{$time}} hours</li>
+                                        <li><span class="fa-li"><i class="fa-regular fa-clock"></i></span><strong>DURATION</strong> {{$duration}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -217,12 +217,6 @@ setTimeout(
            confirm.log(Error)
         } 
     }
-
-
-    
-    
-    
-    
     
     , 1);
 

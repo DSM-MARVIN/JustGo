@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use DateInterval;
 use Illuminate\Http\Request;
 
 class apitripsummary extends Controller
@@ -32,7 +33,7 @@ class apitripsummary extends Controller
 
 
     $body =  json_decode($response, false);
-    $res = $body->outbound_trip_summary;
+    // $res = $body->outbound_trip_summary;
 
     $data = [
       'total_passengers' => $body->outbound_trip_summary->total_passengers,
@@ -43,26 +44,31 @@ class apitripsummary extends Controller
       'price' => $body->outbound_trip_summary->price,
     ];
 
-
-    // $assigned_time = "2012-05-21 22:02:00";
-    // $completed_time= "2012-05-22 05:02:00";   
-    
-    // $d1 = new DateTime($assigned_time);
-    // $d2 = new DateTime($completed_time);
-    // $interval = $d2->diff($d1);
-
-    $duration =  (int)$body->outbound_trip_summary->depature_time;
-
-// j gives days
-    $time = date ( 's', $duration);
-
-
-
+    $date = $body->outbound_trip_summary->depature_date;
+    $duration = explode("-",$body->outbound_trip_summary->depature_time);
+    $time1 = $duration[0];
+    $time2 = $duration[1];
+    $time1formate = date("H:i", strtotime($time1));
+    $time2formate = date("H:i", strtotime($time2));
+    $first_date = new DateTime("{$date} {$time1formate}");
+    $second_date = new DateTime( $time2formate);
+    $difference = $first_date->diff($second_date);
+    function format_interval(DateInterval $interval) {
+      $result = "";
+      // if ($interval->y) { $result .= $interval->format("%y years "); }
+      // if ($interval->m) { $result .= $interval->format("%m months "); }
+      // if ($interval->d) { $result .= $interval->format("%d days "); }
+      if ($interval->h) { $result .= $interval->format("%h hours "); }
+      if ($interval->i) { $result .= $interval->format("%i minutes "); }
+      if ($interval->s) { $result .= $interval->format("%s seconds "); }
+  
+      return $result;
+  }
+  $formatedDuration = format_interval($difference);
 
     return view('trip-summary',[
       'response' => $data,
-      'time' => $time,
-
+      'duration' =>  $formatedDuration,
     ]);
 
     }

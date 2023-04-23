@@ -4,6 +4,7 @@ use App\Models\Trip;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\apitripsummary;
 use App\Http\Controllers\apisearchresults;
+use App\Http\Controllers\passengerdetails;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,8 @@ Route::get('/', [apisearchresults::class, 'results'])->name('results');
 
 Route::get('/tripsummary', [apitripsummary::class, 'trip'])->name('trip');
 
-Route::get('/passenger/details', function () {
-    return view('passengers-details');
-  });
 
-Route::Post('/passenger/details', function () {
-  return view('passengers-details');
-});
+Route::get('/passenger/details', [passengerdetails::class, 'index']);
+Route::post('/passenger/details', [passengerdetails::class, 'sendrequest'])->name('passenger');
+
 
