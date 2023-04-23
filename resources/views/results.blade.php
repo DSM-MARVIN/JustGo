@@ -51,8 +51,8 @@
                 </div>
             </div>
         </div>
+           
         <div class="content-area">
-
         	<div class="container-sm bg-white rounded-5 p-4">
                 <img src="images/banner-book.svg" class="img-fluid d-block m-auto mb-3" />
                 <h3 class="text-center">Select your trip</h3>
@@ -69,7 +69,7 @@
                     	<div class="row mt-3 g-1">
                         	<div class="col-7 align-self-center">
                             	<ul class="fa-ul fa-ul list-inline ms-0 mb-0">
-                                    <li class="list-inline-item ms-4"><a href="#" class="text-black-50"><span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><small>10 Results</small></a></li>
+                                    <li class="list-inline-item ms-4"><a href="#" class="text-black-50"><span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><small>{{$dataresults}} Results</small></a></li>
                                 </ul>
                             </div>
                             <div class="col-5">
@@ -83,25 +83,28 @@
                                 </select>
                             </div>
                         </div>
-                    	<ul class="results-list" id="accordionResult">
 
+
+                        
+                    	<ul class="results-list" id="accordionResult">
                         <!-- Start of API trip -->
+                        @foreach($responseupdated as $res)
 
                         <li class="accordion-item mt-3">
-                            	<strong class="text-uppercase">{{$response['provider']}}</strong>
+                            	<strong class="text-uppercase">{{$res->provider}}</strong>
                                 <div class="bg-grey">
                                     <div class="row g-0">
                                         <div class="col-3 bordered border-end border-light">
                                             <div class="p-2">
-                                            	<img src="{{$response['carrier_logo']}}" class="img-fluid m-auto d-block carrier-logo" />
+                                            	<img src="{{$res->carrier_logo}}" class="img-fluid m-auto d-block carrier-logo" />
                                             </div>
                                         </div>
                                         <div class="col-5 bordered border-end border-light">
                                         	<div class="p-2">
                                             	<ul class="fa-ul ms-3">
-    												<li><span class="fa-li"><i class="fa-regular fa-clock"></i></span><strong>DURATION</strong> {{$response['journeyDuration']}}</li>
+    												<li><span class="fa-li"><i class="fa-regular fa-clock"></i></span><strong>DURATION</strong> {{$res->journeyDuration}}</li>
                                                 </ul>
-                                                <span class="d-block mt-1">{{$response['availableSeats']}} Seats Available</span>
+                                                <span class="d-block mt-1">{{$res->availableSeats}} Seats Available</span>
                                                 <div class="mt-1">
                                                     <div class="rating-box">
                                                         <div class="rating" style="width:80%;"></div>
@@ -113,37 +116,39 @@
                                         <div class="col-4 text-center">
                                         	<div class="p-1 d-table h-100 w-100">
                                                 <div class="d-table-cell align-middle">
-                                                    <strong class="text-uppercase text-orange">{{$response['classType']}}</strong>
-                                                    <h6 class="mb-0">R{{$response['price']}}.00</h6>
+                                                    <strong class="text-uppercase text-orange">{{$res->classType}}</strong>
+                                                    <h6 class="mb-0">R{{$res->price}}.00</h6>
                                                     <small class="text-uppercase">per person</small>
                                             	</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="collapse_01" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionResult">
+                                    <div id="collapse_{{$res->results_id}}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionResult">
                                         <div class="row g-0">
                                             <div class="col-8 bordered border-end border-top border-light">
                                             	<div class="p-2">
                                                 	<ul class="fa-ul ms-3">
                                                         <li>
-                                                            <span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><strong>DEPART</strong> {{$response['departureLocation']}} {{$response['depature_time']}}<br>
-                                                            <small class="text-uppercase">{{$response['departureLocationDescription']}}</small>
+                                                            <span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><strong>DEPART</strong> {{$res->departureLocation}} {{$res->depature_time}}<br>
+                                                            <small class="text-uppercase">{{$res->departureLocationDescription}}</small>
                                                         </li>
                                                         <li>
-                                                            <span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><strong>ARRIVE</strong> {{$response['destinationLocation']}} {{$response['arrival_time']}}<br>
-                                                            <small class="text-uppercase">{{$response['destinationLocationDescription']}}</small>
+                                                            <span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><strong>ARRIVE</strong> {{$res->destinationLocation}} {{$res->arrival_time}}<br>
+                                                            <small class="text-uppercase">{{$res->destinationLocationDescription}}</small>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="accordion-button text-center d-block collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_01" aria-expanded="true" aria-controls="collapse_01">
+                                    <button class="accordion-button text-center d-block collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{$res->results_id}}" aria-expanded="true" aria-controls="collapse_{{$res->results_id}}">
                                         <i class="fas fa-caret-down"></i>
                                     </button>
                                 </div>
                             </li>
 
+
+                            @endforeach
                              <!-- End of API trip -->
 
                         	
@@ -156,7 +161,7 @@
                     	<div class="row mt-3 g-1">
                         	<div class="col-7 align-self-center">
                             	<ul class="fa-ul fa-ul list-inline ms-0 mb-0">
-                                    <li class="list-inline-item ms-4"><a href="#" class="text-black-50"><span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><small>10 Results</small></a></li>
+                                    <li class="list-inline-item ms-4"><a href="#" class="text-black-50"><span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><small>{{$dataresults}} Results</small></a></li>
                                     <li class="list-inline-item ms-4"><a href="#" class="text-black-50"><span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><small>15 Results</small></a></li>
                                 </ul>
                             </div>
@@ -174,64 +179,71 @@
                     	<ul class="results-list" id="accordionResult">
                         	                        <!-- Start of API trip -->
 
-                        <li class="accordion-item mt-3">
-                            	<strong class="text-uppercase">{{$response['provider']}}</strong>
-                                <div class="bg-grey">
-                                    <div class="row g-0">
-                                        <div class="col-3 bordered border-end border-light">
-                                            <div class="p-2">
-                                            	<img src="{{$response['carrier_logo']}}" class="img-fluid m-auto d-block carrier-logo" />
-                                            </div>
-                                        </div>
-                                        <div class="col-5 bordered border-end border-light">
-                                        	<div class="p-2">
-                                            	<ul class="fa-ul ms-3">
-    												<li><span class="fa-li"><i class="fa-regular fa-clock"></i></span><strong>DURATION</strong> {{$response['journeyDuration']}}</li>
-                                                </ul>
-                                                <span class="d-block mt-1">{{$response['availableSeats']}} Seats Available</span>
-                                                <div class="mt-1">
-                                                    <div class="rating-box">
-                                                        <div class="rating" style="width:80%;"></div>
-                                                    </div>
-                                                    <small class="text-uppercase text-nowrap mt-1">(21) Reviews</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-4 text-center">
-                                        	<div class="p-1 d-table h-100 w-100">
-                                                <div class="d-table-cell align-middle">
-                                                    <strong class="text-uppercase text-orange">{{$response['classType']}}</strong>
-                                                    <h6 class="mb-0">R{{$response['price']}}.00</h6>
-                                                    <small class="text-uppercase">per person</small>
-                                            	</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="collapse_01" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionResult">
-                                        <div class="row g-0">
-                                            <div class="col-8 bordered border-end border-top border-light">
-                                            	<div class="p-2">
-                                                	<ul class="fa-ul ms-3">
-                                                        <li>
-                                                            <span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><strong>DEPART</strong> {{$response['departureLocation']}} {{$response['depature_time']}}<br>
-                                                            <small class="text-uppercase">{{$response['departureLocationDescription']}}</small>
-                                                        </li>
-                                                        <li>
-                                                            <span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><strong>ARRIVE</strong> {{$response['destinationLocation']}} {{$response['arrival_time']}}<br>
-                                                            <small class="text-uppercase">{{$response['destinationLocationDescription']}}</small>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="accordion-button text-center d-block collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_01" aria-expanded="true" aria-controls="collapse_01">
-                                        <i class="fas fa-caret-down"></i>
-                                    </button>
-                                </div>
-                            </li>
+                                                    @foreach($responseupdated as $res)
 
-                             <!-- End of API trip -->
+ 
+
+<li class="accordion-item mt-3">
+        <strong class="text-uppercase">{{$res->provider}}</strong>
+        <div class="bg-grey">
+            <div class="row g-0">
+                <div class="col-3 bordered border-end border-light">
+                    <div class="p-2">
+                        <img src="{{$res->carrier_logo}}" class="img-fluid m-auto d-block carrier-logo" />
+                    </div>
+                </div>
+                <div class="col-5 bordered border-end border-light">
+                    <div class="p-2">
+                        <ul class="fa-ul ms-3">
+                            <li><span class="fa-li"><i class="fa-regular fa-clock"></i></span><strong>DURATION</strong> {{$res->journeyDuration}}</li>
+                        </ul>
+                        <span class="d-block mt-1">{{$res->availableSeats}} Seats Available</span>
+                        <div class="mt-1">
+                            <div class="rating-box">
+                                <div class="rating" style="width:80%;"></div>
+                            </div>
+                            <small class="text-uppercase text-nowrap mt-1">(21) Reviews</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <div class="p-1 d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <strong class="text-uppercase text-orange">{{$res->classType}}</strong>
+                            <h6 class="mb-0">R{{$res->price}}.00</h6>
+                            <small class="text-uppercase">per person</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="collapse_01" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionResult">
+                <div class="row g-0">
+                    <div class="col-8 bordered border-end border-top border-light">
+                        <div class="p-2">
+                            <ul class="fa-ul ms-3">
+                                <li>
+                                    <span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><strong>DEPART</strong> {{$res->departureLocation}} {{$res->depature_time}}<br>
+                                    <small class="text-uppercase">{{$res->departureLocationDescription}}</small>
+                                </li>
+                                <li>
+                                    <span class="fa-li"><i class="fa-solid fa-van-shuttle"></i></span><strong>ARRIVE</strong> {{$res->destinationLocation}} {{$res->arrival_time}}<br>
+                                    <small class="text-uppercase">{{$res->destinationLocationDescription}}</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="accordion-button text-center d-block collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_01" aria-expanded="true" aria-controls="collapse_01">
+                <i class="fas fa-caret-down"></i>
+            </button>
+        </div>
+    </li>
+
+
+    @endforeach
+     <!-- End of API trip -->
+
                                                   </ul>
                         <div class="d-grid">
                             <button type="button" class="btn btn-link btn-sm text-black-50 mb-3"><small>Load more results</small></button>

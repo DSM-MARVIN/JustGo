@@ -30,29 +30,13 @@ class apisearchresults extends Controller
         curl_close($curl);
         
             $body =  json_decode($response, false);
-            $data = [
-              'destinationLocationDescription' => $body->outbound_results['0']->destinationLocationDescription,
-              'provider' => $body->outbound_results['0']->provider,
-              'departureLocation' => $body->outbound_results['0']->departureLocation,
-              'destinationLocation' => $body->outbound_results['0']->destinationLocation,
-              'departureLocationDescription' => $body->outbound_results['0']->departureLocationDescription,
-              'departureDate' => $body->outbound_results['0']->departureDate,
-              'journeyDuration' => $body->outbound_results['0']->journeyDuration,
-              'tripCode' => $body->outbound_results['0']->tripCode,
-              'serviceCode' => $body->outbound_results['0']->serviceCode,
-              'serviceName' => $body->outbound_results['0']->serviceName,  
-              'classType' => $body->outbound_results['0']->classType,
-              'availableSeats' => $body->outbound_results['0']->availableSeats,
-              'price' => $body->outbound_results['0']->price,
-              'date_created' => $body->outbound_results['0']->date_created,
-              'supplier_name' => $body->outbound_results['0']->supplier_name,
-              'carrier_logo' => $body->outbound_results['0']->carrier_logo,
-              'depature_time' => $body->outbound_results['0']->depature_time,
-              'arrival_time' => $body->outbound_results['0']->arrival_time,
-            ];
-        
+            $newdata = $body->outbound_results;
+            $dataresults =  sizeof($newdata);
+
             return view('results',[
-              'response' => $data,
+              'responseupdated' => $newdata,
+              'response' => $newdata,
+              'dataresults' => $dataresults
             ]);
     }
 }
